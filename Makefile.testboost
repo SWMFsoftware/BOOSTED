@@ -1,0 +1,25 @@
+######################
+## Included makefile for configuring, compiling, testing, and running
+## MHD solver in the boosted frame
+## Revision history
+## 12/25/2024 - Igor Sokolov, implemented vesion as described in the
+##              2024 arxiv paper
+##
+#######################################################################
+test_boosted_frame_exe:
+	@(cd ../src; make LIB)
+	@make test_boosted_frame.o
+	${LINK.f90} -o test_boosted_frame.exe test_boosted_frame.o \
+		-L${LIBDIR} -lSHARE ${Lflag}
+
+test_boosted_frame:
+	@echo test_boosted_frame starting    > test_boosted_frame.diff
+	@make test_boosted_frame_exe	     >> test_boosted_frame.diff
+	@echo ./test_boosted_frame.exe	     >> test_boosted_frame.diff
+	-@(./test_boosted_frame.exe)
+	-@(${DIFFNUM} -b -r=1e-5 -a=1e-13 \
+		test_mhd_x.out \
+		test_mhd_x.ref               > test_boosted_frame.diff)
+	@ls -l  test_boosted_frame.diff
+
+######################################################################

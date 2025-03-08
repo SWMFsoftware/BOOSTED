@@ -1,0 +1,17 @@
+######################
+## Included makefile for configuring, compiling, testing, and running
+## MHD solver in the boosted frame
+## Revision history
+## 12/25/2024 - Igor Sokolov, implemented vesion as described in the
+##              2024 arxiv paper
+##
+
+BOOSTED:
+	${MAKE} boosted_compile
+
+boosted_compile:
+	./Config.pl -v=Empty,SC/BATSRUS,IH/BATSRUS
+	./Config.pl -o=SC:u=Awsom,e=AwsomSA,ng=2,g=6,8,4
+	./Config.pl -o=IH:u=Boosted,e=MhdPeSA,ng=2,g=4,4,4
+	cd SC/BATSRUS; make oldtr
+	${MAKE} SWMF

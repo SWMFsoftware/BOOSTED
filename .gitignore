@@ -1,0 +1,13 @@
+*~
+*.o
+*.a
+*.git
+*.mod
+*.exe
+*.diff
+*.asv
+.DS_Store
+Tmp_*
+.cache/
+.vscode/
+.clang-format
